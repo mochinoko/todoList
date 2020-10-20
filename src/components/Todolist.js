@@ -8,17 +8,19 @@ import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   DatePicker,
-  MuiPickersUtilsProvider,
+  MuiPickersUtilsProvider
 } from '@material-ui/pickers';
-
-
+import MomentUtils from '@date-io/moment';
 
 function Todolist() {
 
-  const [ selectedDate,  setSelectedDate ] = useState(new Date());
+  const [ selectedDate ] = useState(new Date());
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    //setSelectedDate(date);
+    this.setState({ 
+      selectedDate: date
+    });
   }
 
   
@@ -74,9 +76,16 @@ function Todolist() {
     <div className="App">
     <h1 className="h1" >ToDoList</h1>
       <form onSubmit={addTodo}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <DatePicker style={{margin: 5}} label="Date" value={selectedDate} name="date" 
-        onChange={handleDateChange} />
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <DatePicker 
+        style={{margin: 5}} 
+        label="Date" 
+        name="date" 
+        onChange={handleDateChange} 
+        value={selectedDate}
+        disablePast
+        />
+       
       </MuiPickersUtilsProvider>
         <TextField  style={{margin: 5}} label="Description"  name="desc" value={todo.desc} onChange={inputChanged} />
         <TextField  style={{margin: 5}} label = "Priority" name="priority" value={todo.priority} onChange={inputChanged} />
